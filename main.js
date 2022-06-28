@@ -1,7 +1,9 @@
 const buttons = document.querySelectorAll('[data-carousel-button]');
+let lastRenderTime = 0;
 
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
+    lastRenderTime = 0;
     const positionChange = button.dataset.carouselButton === 'next' ? 1 : -1;
     const photos = button
       .closest('[data-carousel]')
@@ -15,3 +17,8 @@ buttons.forEach((button) => {
     delete activePhoto.dataset.active;
   });
 });
+
+setInterval(() => {
+  lastRenderTime++;
+  if (lastRenderTime > 1000) buttons[1].click();
+}, 1);
